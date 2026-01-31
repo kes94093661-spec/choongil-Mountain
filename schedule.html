@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>충일 산악회 | 일정</title>
+  <link rel="stylesheet" href="./styles-inline.css">
+  <style>
+    /* index.html과 동일 스타일(복사) - 파일 분리 원하면 말해줘 */
+    :root{--bg:#0b1220;--surface:#0f1a2e;--card:#101c33;--line:rgba(255,255,255,.10);--text:#eaf2ff;--muted:rgba(234,242,255,.72);--brand1:#2f6bff;--brand2:#00c2ff;--good:#34d399;--warn:#f59e0b;--bad:#fb7185;}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:radial-gradient(1200px 800px at 30% 0%, rgba(47,107,255,.25), transparent 55%),radial-gradient(1200px 800px at 70% 0%, rgba(0,194,255,.18), transparent 55%),var(--bg);color:var(--text);}
+    a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(11,18,32,.65);border-bottom:1px solid var(--line)}
+    .nav-inner{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .badge{padding:4px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--muted)}
+    .menu{display:flex;gap:14px;flex-wrap:wrap}
+    .menu a{padding:8px 10px;border-radius:10px;color:var(--muted)}
+    .menu a:hover{background:rgba(255,255,255,.06);color:var(--text)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:16px;padding:16px}
+    .h2{font-size:20px;margin:0 0 10px}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .grid{display:grid;gap:14px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){.grid.cols-3{grid-template-columns:1fr}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);cursor:pointer;font-weight:650}
+    .btn.primary{background:linear-gradient(90deg, rgba(47,107,255,.95), rgba(0,194,255,.92));border:none}
+    .input, select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);outline:none}
+    .kv{display:flex;gap:10px;flex-wrap:wrap}
+    .kv span{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted)}
+    .pill{padding:4px 10px;border-radius:999px;font-size:12px;display:inline-block;border:1px solid var(--line);color:var(--muted)}
+    .pill.good{color:var(--good);border-color:rgba(52,211,153,.35)}
+    .pill.warn{color:var(--warn);border-color:rgba(245,158,11,.35)}
+    .pill.bad{color:var(--bad);border-color:rgba(251,113,133,.35)}
+    .small{font-size:12px}
+    .footer{padding:28px 24px;color:var(--muted);border-top:1px solid var(--line)}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">
+        <a href="./index.html">충일 산악회</a>
+        <span class="badge">일정</span>
+      </div>
+      <div class="menu">
+        <a href="./schedule.html">일정</a>
+        <a href="./notice.html">공지</a>
+        <a href="./gallery.html">후기</a>
+        <a href="./contact.html">문의</a>
+        <a href="./admin.html">관리자(목업)</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h1 class="h2">산행 일정(목업)</h1>
+      <div class="row">
+        <input id="q" class="input" placeholder="검색: 산 이름, 장소, 제목" style="max-width:420px"/>
+        <select id="difficulty" class="input" style="max-width:160px">
+          <option value="">난이도 전체</option>
+          <option value="easy">초급</option>
+          <option value="mid">중급</option>
+          <option value="hard">상급</option>
+        </select>
+        <button id="search" class="btn primary">검색</button>
+      </div>
+      <p class="muted small" style="margin:10px 0 0">지금은 HTML 목업이라 검색은 프론트에서만 동작합니다.</p>
+    </div>
+
+    <div id="list" class="grid" style="margin-top:14px"></div>
+  </div>
+
+  <div class="footer container">© 충일 산악회 (HTML 목업)</div>
+
+  <script>
+    const EVENTS = [
+      { id: 1, title:'2월 정기 산행', mountain:'북한산', date:'2026-02-08', meeting_time:'08:00', meeting_place:'구파발역 1번 출구', difficulty:'mid', difficulty_label:'중급', capacity:25, reserved_people:12 },
+      { id: 2, title:'초급자 환영 산책형', mountain:'관악산', date:'2026-02-15', meeting_time:'09:00', meeting_place:'사당역 4번 출구', difficulty:'easy', difficulty_label:'초급', capacity:30, reserved_people:27 },
+      { id: 3, title:'상급 코스 도전', mountain:'도봉산', date:'2026-02-22', meeting_time:'07:30', meeting_place:'도봉산역 1번 출구', difficulty:'hard', difficulty_label:'상급', capacity:18, reserved_people:18 }
+    ];
+
+    function fmtDifficulty(d){
+      if(d==='easy') return {cls:'good', label:'초급'};
+      if(d==='mid') return {cls:'warn', label:'중급'};
+      if(d==='hard') return {cls:'bad', label:'상급'};
+      return {cls:'', label:d};
+    }
+
+    function render(list){
+      const el = document.querySelector('#list');
+      if(list.length===0){
+        el.innerHTML = `<div class="card muted">검색 결과가 없습니다.</div>`;
+        return;
+      }
+      el.innerHTML = list.map(e=>{
+        const d = fmtDifficulty(e.difficulty);
+        const available = Math.max(0, e.capacity - e.reserved_people);
+        const full = available<=0 ? `<span class="pill bad">마감</span>` : `<span class="pill good">예약가능</span>`;
+        return `
+          <div class="card">
+            <div class="kv">
+              <span>${e.date} ${e.meeting_time}</span>
+              <span>${e.mountain}</span>
+              <span class="pill ${d.cls}">${e.difficulty_label}</span>
+              ${full}
+              <span>잔여 ${available}/${e.capacity}</span>
+            </div>
+            <div style="margin-top:10px"><b>${e.title}</b></div>
+            <div class="muted small" style="margin-top:6px">${e.meeting_place}</div>
+            <div style="margin-top:12px">
+              <a class="btn primary" href="./event.html?id=${e.id}">상세/예약</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function applyFilter(){
+      const q = document.querySelector('#q').value.trim();
+      const diff = document.querySelector('#difficulty').value;
+
+      let list = [...EVENTS];
+      if(diff) list = list.filter(e => e.difficulty === diff);
+      if(q){
+        const qq = q.toLowerCase();
+        list = list.filter(e =>
+          (e.title + ' ' + e.mountain + ' ' + e.meeting_place).toLowerCase().includes(qq)
+        );
+      }
+      render(list);
+    }
+
+    document.querySelector('#search').onclick = applyFilter;
+    render(EVENTS);
+  </script>
+</body>
+</html>

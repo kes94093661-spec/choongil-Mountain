@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>충일 산악회 | 상세/예약</title>
+  <style>
+    :root{--bg:#0b1220;--line:rgba(255,255,255,.10);--text:#eaf2ff;--muted:rgba(234,242,255,.72);
+      --brand1:#2f6bff;--brand2:#00c2ff;--good:#34d399;--warn:#f59e0b;--bad:#fb7185;}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+      background:radial-gradient(1200px 800px at 30% 0%, rgba(47,107,255,.25), transparent 55%),
+                 radial-gradient(1200px 800px at 70% 0%, rgba(0,194,255,.18), transparent 55%),var(--bg);color:var(--text)}
+    a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(11,18,32,.65);border-bottom:1px solid var(--line)}
+    .nav-inner{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .badge{padding:4px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--muted)}
+    .menu{display:flex;gap:14px;flex-wrap:wrap}
+    .menu a{padding:8px 10px;border-radius:10px;color:var(--muted)}
+    .menu a:hover{background:rgba(255,255,255,.06);color:var(--text)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .grid{display:grid;gap:14px;grid-template-columns:2fr 1fr}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:16px;padding:16px}
+    .h2{font-size:20px;margin:0 0 10px}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .kv{display:flex;gap:10px;flex-wrap:wrap}
+    .kv span{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted)}
+    .pill{padding:4px 10px;border-radius:999px;font-size:12px;display:inline-block;border:1px solid var(--line);color:var(--muted)}
+    .pill.good{color:var(--good);border-color:rgba(52,211,153,.35)}
+    .pill.warn{color:var(--warn);border-color:rgba(245,158,11,.35)}
+    .pill.bad{color:var(--bad);border-color:rgba(251,113,133,.35)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.05);color:var(--text);cursor:pointer;font-weight:650;width:100%}
+    .btn.primary{background:linear-gradient(90deg, rgba(47,107,255,.95), rgba(0,194,255,.92));border:none}
+    label{font-size:13px;color:var(--muted);display:block;margin:10px 0 6px}
+    .input, textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);outline:none}
+    hr{border:none;border-top:1px solid var(--line);margin:14px 0}
+    .footer{padding:28px 24px;color:var(--muted);border-top:1px solid var(--line)}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">
+        <a href="./index.html">충일 산악회</a>
+        <span class="badge">상세/예약</span>
+      </div>
+      <div class="menu">
+        <a href="./schedule.html">일정</a>
+        <a href="./notice.html">공지</a>
+        <a href="./gallery.html">후기</a>
+        <a href="./contact.html">문의</a>
+        <a href="./admin.html">관리자(목업)</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="wrap" class="grid"></div>
+  </div>
+
+  <div class="footer container">예약 제출은 “목업”이라 실제 저장은 되지 않습니다.</div>
+
+  <script>
+    const EVENTS = [
+      { id: 1, title:'2월 정기 산행', mountain:'북한산', date:'2026-02-08', meeting_time:'08:00', meeting_place:'구파발역 1번 출구', difficulty:'mid', difficulty_label:'중급', duration_hours:5, capacity:25, reserved_people:12, fee:10000, course:'구파발 → 대동문 → 백운대 → 하산', notes:'아이젠/스틱 권장. 날씨에 따라 코스 조정.' },
+      { id: 2, title:'초급자 환영 산책형', mountain:'관악산', date:'2026-02-15', meeting_time:'09:00', meeting_place:'사당역 4번 출구', difficulty:'easy', difficulty_label:'초급', duration_hours:4, capacity:30, reserved_people:27, fee:8000, course:'사당 → 연주대(상황에 따라) → 하산', notes:'초급자 추천. 여벌 장갑 필수.' },
+      { id: 3, title:'상급 코스 도전', mountain:'도봉산', date:'2026-02-22', meeting_time:'07:30', meeting_place:'도봉산역 1번 출구', difficulty:'hard', difficulty_label:'상급', duration_hours:6, capacity:18, reserved_people:18, fee:12000, course:'도봉산역 → 신선대 → 주봉 → 하산', notes:'상급 코스. 안전 장비는 상황에 따라.' }
+    ];
+
+    function getParam(name){
+      const url = new URL(location.href);
+      return url.searchParams.get(name);
+    }
+    function diffCls(d){
+      if(d==='easy') return 'good';
+      if(d==='mid') return 'warn';
+      if(d==='hard') return 'bad';
+      return '';
+    }
+
+    (function(){
+      const id = Number(getParam('id') || 1);
+      const e = EVENTS.find(x => x.id === id) || EVENTS[0];
+      const available = Math.max(0, e.capacity - e.reserved_people);
+
+      document.querySelector('#wrap').innerHTML = `
+        <div class="card">
+          <h1 class="h2">${e.title}</h1>
+          <div class="kv">
+            <span>${e.date} ${e.meeting_time}</span>
+            <span>${e.mountain}</span>
+            <span class="pill ${diffCls(e.difficulty)}">${e.difficulty_label}</span>
+            <span>회비 ${Number(e.fee).toLocaleString()}원</span>
+            <span>소요 ${e.duration_hours}시간</span>
+            <span>잔여 ${available}/${e.capacity}</span>
+          </div>
+          <hr/>
+          <div class="muted small"><b>집결</b> · ${e.meeting_place}</div>
+          <div class="muted small" style="margin-top:6px"><b>코스</b> · ${e.course}</div>
+          <div class="muted small" style="margin-top:6px"><b>안내</b> · ${e.notes}</div>
+        </div>
+
+        <div class="card">
+          <h2 class="h2">예약하기(목업)</h2>
+          <div id="msg" class="muted small">정보를 입력해주세요.</div>
+          <label>이름</label>
+          <input id="name" class="input" placeholder="홍길동"/>
+          <label>연락처</label>
+          <input id="phone" class="input" placeholder="010-0000-0000"/>
+          <label>인원</label>
+          <input id="people" type="number" class="input" min="1" value="1"/>
+          <label>메모</label>
+          <textarea id="memo" class="input" rows="3" placeholder="초보자/동승 요청 등"></textarea>
+          <div style="margin-top:12px">
+            <button id="submit" class="btn primary">예약 제출</button>
+          </div>
+          <div class="muted small" style="margin-top:10px">
+            지금은 저장되지 않습니다. Supabase 연결 시 실제 예약으로 바뀝니다.
+          </div>
+        </div>
+      `;
+
+      document.querySelector('#submit').onclick = () => {
+        const name = document.querySelector('#name').value.trim();
+        const phone = document.querySelector('#phone').value.trim();
+        const people = Number(document.querySelector('#people').value);
+
+        if(!name || !phone || !people || people < 1){
+          document.querySelector('#msg').innerHTML = `<span class="pill bad">입력 오류</span> 필수 항목 확인`;
+          return;
+        }
+        document.querySelector('#msg').innerHTML =
+          `<span class="pill good">접수(목업)</span> ${name}님 ${people}명 예약 폼이 제출된 것으로 처리했어요(저장 X).`;
+      };
+    })();
+  </script>
+</body>
+</html>

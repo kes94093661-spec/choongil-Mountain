@@ -1,14 +1,154 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>충일 산악회 | 홈</title>
+  <style>
+    :root{
+      --bg:#0b1220; --surface:#0f1a2e; --card:#101c33; --line:rgba(255,255,255,.10);
+      --text:#eaf2ff; --muted:rgba(234,242,255,.72);
+      --brand1:#2f6bff; --brand2:#00c2ff; --good:#34d399; --warn:#f59e0b; --bad:#fb7185;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+      background: radial-gradient(1200px 800px at 30% 0%, rgba(47,107,255,.25), transparent 55%),
+                  radial-gradient(1200px 800px at 70% 0%, rgba(0,194,255,.18), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit; text-decoration:none}
+    nav{position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); background:rgba(11,18,32,.65); border-bottom:1px solid var(--line)}
+    .nav-inner{max-width:1100px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+    .badge{padding:4px 10px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--muted)}
+    .menu{display:flex; gap:14px; flex-wrap:wrap}
+    .menu a{padding:8px 10px; border-radius:10px; color:var(--muted)}
+    .menu a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .container{max-width:1100px; margin:0 auto; padding:24px}
+    .hero{padding:18px 0 8px}
+    .h1{font-size:34px; margin:0 0 8px}
+    .h2{font-size:20px; margin:0 0 10px}
+    .muted{color:var(--muted)}
+    .grid{display:grid; gap:14px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){ .grid.cols-3{grid-template-columns:1fr} }
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius:16px; padding:16px}
+    .kv{display:flex; gap:10px; flex-wrap:wrap}
+    .kv span{border:1px solid var(--line); border-radius:999px; padding:6px 10px; font-size:12px; color:var(--muted)}
+    .btn{display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; border-radius:12px; border:1px solid var(--line);
+         background:rgba(255,255,255,.05); color:var(--text); cursor:pointer; font-weight:650}
+    .btn.primary{background:linear-gradient(90deg, rgba(47,107,255,.95), rgba(0,194,255,.92)); border:none}
+    hr{border:none; border-top:1px solid var(--line); margin:14px 0}
+    .footer{padding:28px 24px; color:var(--muted); border-top:1px solid var(--line)}
+    .small{font-size:12px}
+    .pill{padding:4px 10px; border-radius:999px; font-size:12px; display:inline-block; border:1px solid var(--line); color:var(--muted)}
+    .pill.good{color:var(--good); border-color:rgba(52,211,153,.35)}
+    .pill.warn{color:var(--warn); border-color:rgba(245,158,11,.35)}
+  </style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">
+        <a href="./index.html">충일 산악회</a>
+        <span class="badge">일정 · 예약 · 후기</span>
+      </div>
+      <div class="menu">
+        <a href="./schedule.html">일정</a>
+        <a href="./notice.html">공지</a>
+        <a href="./gallery.html">후기</a>
+        <a href="./contact.html">문의</a>
+        <a href="./admin.html">관리자(목업)</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero">
+      <h1 class="h1">산행은 가볍게, 운영은 탄탄하게.</h1>
+      <p class="muted">지금은 “HTML만” 버전이라 데이터 저장은 안 됩니다. (나중에 Supabase 연결하면 예약/관리까지 활성화)</p>
+    </section>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <h2 class="h2">다가오는 산행</h2>
+        <div id="nextEvent" class="muted">불러오는 중…</div>
+        <hr/>
+        <a class="btn primary" href="./schedule.html">일정 보러가기</a>
+      </div>
+
+      <div class="card">
+        <h2 class="h2">고정 공지</h2>
+        <div id="pinnedNotice" class="muted">불러오는 중…</div>
+        <hr/>
+        <a class="btn" href="./notice.html">공지 전체</a>
+      </div>
+
+      <div class="card">
+        <h2 class="h2">초보자 가이드</h2>
+        <div class="muted small">
+          준비물: 등산화, 장갑, 바람막이, 물 1L, 간식<br/>
+          안전: 단독 이탈 금지, 대장 안내 준수
+        </div>
+        <hr/>
+        <a class="btn" href="./contact.html">처음 참여 문의</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2 class="h2">빠른 예약(목업)</h2>
+      <p class="muted small">가장 가까운 일정 상세 페이지로 이동합니다.</p>
+      <button id="goReserve" class="btn primary">예약 페이지 열기</button>
+    </div>
+  </div>
+
+  <div class="footer container">© 충일 산악회. (HTML 목업 버전)</div>
+
+  <script>
+    // ---- 목업 데이터 (나중에 Supabase/DB로 교체) ----
+    const MOCK = {
+      events: [
+        { id: 1, title:'2월 정기 산행', mountain:'북한산', date:'2026-02-08', meeting_time:'08:00', meeting_place:'구파발역 1번 출구', difficulty:'mid', difficulty_label:'중급', capacity:25, reserved_people:12, fee:10000 },
+        { id: 2, title:'초급자 환영 산책형', mountain:'관악산', date:'2026-02-15', meeting_time:'09:00', meeting_place:'사당역 4번 출구', difficulty:'easy', difficulty_label:'초급', capacity:30, reserved_people:27, fee:8000 }
+      ],
+      notices: [
+        { id: 1, title:'우천/강설 시 안내', body:'기상 악화 시 전날 20:00까지 공지 후 일정 조정 또는 취소합니다.', pinned:true }
+      ]
+    };
+
+    function pillForDifficulty(d){
+      if(d === 'easy') return 'pill good';
+      if(d === 'mid') return 'pill warn';
+      return 'pill';
+    }
+
+    (function(){
+      const next = MOCK.events[0];
+      const available = Math.max(0, next.capacity - next.reserved_people);
+      document.querySelector('#nextEvent').innerHTML = `
+        <div class="kv">
+          <span>${next.date} ${next.meeting_time}</span>
+          <span>${next.mountain}</span>
+          <span class="${pillForDifficulty(next.difficulty)}">${next.difficulty_label}</span>
+          <span>잔여 ${available}/${next.capacity}</span>
+        </div>
+        <div style="margin-top:10px"><b>${next.title}</b></div>
+        <div class="muted small" style="margin-top:6px">${next.meeting_place}</div>
+        <div style="margin-top:10px"><a class="btn" href="./event.html?id=${next.id}">상세/예약</a></div>
+      `;
+
+      const pinned = MOCK.notices.find(n => n.pinned) || MOCK.notices[0];
+      document.querySelector('#pinnedNotice').innerHTML = `
+        <b>${pinned.title}</b>
+        <div class="muted small" style="margin-top:6px">${pinned.body}</div>
+      `;
+
+      document.querySelector('#goReserve').onclick = () => {
+        location.href = `./event.html?id=${next.id}`;
+      };
+    })();
+  </script>
 </body>
 </html>
