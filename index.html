@@ -1,154 +1,290 @@
 <!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>충일 산악회 | 홈</title>
-  <style>
-    :root{
-      --bg:#0b1220; --surface:#0f1a2e; --card:#101c33; --line:rgba(255,255,255,.10);
-      --text:#eaf2ff; --muted:rgba(234,242,255,.72);
-      --brand1:#2f6bff; --brand2:#00c2ff; --good:#34d399; --warn:#f59e0b; --bad:#fb7185;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-      background: radial-gradient(1200px 800px at 30% 0%, rgba(47,107,255,.25), transparent 55%),
-                  radial-gradient(1200px 800px at 70% 0%, rgba(0,194,255,.18), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-    }
-    a{color:inherit; text-decoration:none}
-    nav{position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); background:rgba(11,18,32,.65); border-bottom:1px solid var(--line)}
-    .nav-inner{max-width:1100px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
-    .badge{padding:4px 10px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--muted)}
-    .menu{display:flex; gap:14px; flex-wrap:wrap}
-    .menu a{padding:8px 10px; border-radius:10px; color:var(--muted)}
-    .menu a:hover{background:rgba(255,255,255,.06); color:var(--text)}
-    .container{max-width:1100px; margin:0 auto; padding:24px}
-    .hero{padding:18px 0 8px}
-    .h1{font-size:34px; margin:0 0 8px}
-    .h2{font-size:20px; margin:0 0 10px}
-    .muted{color:var(--muted)}
-    .grid{display:grid; gap:14px}
-    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    @media (max-width:900px){ .grid.cols-3{grid-template-columns:1fr} }
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius:16px; padding:16px}
-    .kv{display:flex; gap:10px; flex-wrap:wrap}
-    .kv span{border:1px solid var(--line); border-radius:999px; padding:6px 10px; font-size:12px; color:var(--muted)}
-    .btn{display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; border-radius:12px; border:1px solid var(--line);
-         background:rgba(255,255,255,.05); color:var(--text); cursor:pointer; font-weight:650}
-    .btn.primary{background:linear-gradient(90deg, rgba(47,107,255,.95), rgba(0,194,255,.92)); border:none}
-    hr{border:none; border-top:1px solid var(--line); margin:14px 0}
-    .footer{padding:28px 24px; color:var(--muted); border-top:1px solid var(--line)}
-    .small{font-size:12px}
-    .pill{padding:4px 10px; border-radius:999px; font-size:12px; display:inline-block; border:1px solid var(--line); color:var(--muted)}
-    .pill.good{color:var(--good); border-color:rgba(52,211,153,.35)}
-    .pill.warn{color:var(--warn); border-color:rgba(245,158,11,.35)}
-  </style>
-</head>
-<body>
-  <nav>
-    <div class="nav-inner">
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio — Choongil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="bg-noise" aria-hidden="true"></div>
+    <header class="site-header">
       <div class="brand">
-        <a href="./index.html">충일 산악회</a>
-        <span class="badge">일정 · 예약 · 후기</span>
+        <span class="brand__dot"></span>
+        <span>Choongil Portfolio</span>
       </div>
-      <div class="menu">
-        <a href="./schedule.html">일정</a>
-        <a href="./notice.html">공지</a>
-        <a href="./gallery.html">후기</a>
-        <a href="./contact.html">문의</a>
-        <a href="./admin.html">관리자(목업)</a>
-      </div>
-    </div>
-  </nav>
+      <nav class="nav">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="btn btn--ghost" id="toggle-mode" type="button" aria-pressed="false">
+        Switch View
+      </button>
+    </header>
 
-  <div class="container">
-    <section class="hero">
-      <h1 class="h1">산행은 가볍게, 운영은 탄탄하게.</h1>
-      <p class="muted">지금은 “HTML만” 버전이라 데이터 저장은 안 됩니다. (나중에 Supabase 연결하면 예약/관리까지 활성화)</p>
-    </section>
-
-    <div class="grid cols-3">
-      <div class="card">
-        <h2 class="h2">다가오는 산행</h2>
-        <div id="nextEvent" class="muted">불러오는 중…</div>
-        <hr/>
-        <a class="btn primary" href="./schedule.html">일정 보러가기</a>
-      </div>
-
-      <div class="card">
-        <h2 class="h2">고정 공지</h2>
-        <div id="pinnedNotice" class="muted">불러오는 중…</div>
-        <hr/>
-        <a class="btn" href="./notice.html">공지 전체</a>
-      </div>
-
-      <div class="card">
-        <h2 class="h2">초보자 가이드</h2>
-        <div class="muted small">
-          준비물: 등산화, 장갑, 바람막이, 물 1L, 간식<br/>
-          안전: 단독 이탈 금지, 대장 안내 준수
+    <main>
+      <section class="hero" id="top">
+        <div class="hero__content">
+          <p class="eyebrow">Product Designer · Frontend</p>
+          <h1>
+            I build digital products that feel alive—
+            <span>bold systems, soft details</span>.
+          </h1>
+          <p class="lede">
+            Seoul-based maker focused on expressive interfaces, scalable design systems,
+            and thoughtful user journeys.
+          </p>
+          <div class="hero__actions">
+            <a class="btn" href="#work">View Projects</a>
+            <a class="btn btn--outline" href="#contact">Let’s Collaborate</a>
+          </div>
+          <div class="hero__stats">
+            <div>
+              <strong>6+</strong>
+              <span>Years building</span>
+            </div>
+            <div>
+              <strong>24</strong>
+              <span>Shipped products</span>
+            </div>
+            <div>
+              <strong>3</strong>
+              <span>Global teams</span>
+            </div>
+          </div>
         </div>
-        <hr/>
-        <a class="btn" href="./contact.html">처음 참여 문의</a>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2 class="h2">빠른 예약(목업)</h2>
-      <p class="muted small">가장 가까운 일정 상세 페이지로 이동합니다.</p>
-      <button id="goReserve" class="btn primary">예약 페이지 열기</button>
-    </div>
-  </div>
-
-  <div class="footer container">© 충일 산악회. (HTML 목업 버전)</div>
-
-  <script>
-    // ---- 목업 데이터 (나중에 Supabase/DB로 교체) ----
-    const MOCK = {
-      events: [
-        { id: 1, title:'2월 정기 산행', mountain:'북한산', date:'2026-02-08', meeting_time:'08:00', meeting_place:'구파발역 1번 출구', difficulty:'mid', difficulty_label:'중급', capacity:25, reserved_people:12, fee:10000 },
-        { id: 2, title:'초급자 환영 산책형', mountain:'관악산', date:'2026-02-15', meeting_time:'09:00', meeting_place:'사당역 4번 출구', difficulty:'easy', difficulty_label:'초급', capacity:30, reserved_people:27, fee:8000 }
-      ],
-      notices: [
-        { id: 1, title:'우천/강설 시 안내', body:'기상 악화 시 전날 20:00까지 공지 후 일정 조정 또는 취소합니다.', pinned:true }
-      ]
-    };
-
-    function pillForDifficulty(d){
-      if(d === 'easy') return 'pill good';
-      if(d === 'mid') return 'pill warn';
-      return 'pill';
-    }
-
-    (function(){
-      const next = MOCK.events[0];
-      const available = Math.max(0, next.capacity - next.reserved_people);
-      document.querySelector('#nextEvent').innerHTML = `
-        <div class="kv">
-          <span>${next.date} ${next.meeting_time}</span>
-          <span>${next.mountain}</span>
-          <span class="${pillForDifficulty(next.difficulty)}">${next.difficulty_label}</span>
-          <span>잔여 ${available}/${next.capacity}</span>
+        <div class="hero__visual" aria-hidden="true">
+          <div class="orb orb--one"></div>
+          <div class="orb orb--two"></div>
+          <div class="orb orb--three"></div>
+          <div class="hero__card">
+            <p>Now</p>
+            <h3>Crafting a fintech platform</h3>
+            <span>Design system + React</span>
+          </div>
         </div>
-        <div style="margin-top:10px"><b>${next.title}</b></div>
-        <div class="muted small" style="margin-top:6px">${next.meeting_place}</div>
-        <div style="margin-top:10px"><a class="btn" href="./event.html?id=${next.id}">상세/예약</a></div>
-      `;
+      </section>
 
-      const pinned = MOCK.notices.find(n => n.pinned) || MOCK.notices[0];
-      document.querySelector('#pinnedNotice').innerHTML = `
-        <b>${pinned.title}</b>
-        <div class="muted small" style="margin-top:6px">${pinned.body}</div>
-      `;
+      <section class="work" id="work">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Selected Work</p>
+            <h2>Projects that balance clarity and edge.</h2>
+          </div>
+          <div class="filters" role="tablist" aria-label="Project filters">
+            <button class="chip is-active" data-filter="all" role="tab">All</button>
+            <button class="chip" data-filter="product" role="tab">Product</button>
+            <button class="chip" data-filter="brand" role="tab">Brand</button>
+            <button class="chip" data-filter="experiments" role="tab">Experiments</button>
+          </div>
+        </div>
+        <div class="grid" id="project-grid">
+          <article class="card" data-category="product">
+            <div class="card__meta">
+              <span>01</span>
+              <span>2025</span>
+            </div>
+            <h3>PulsePay Dashboard</h3>
+            <p>Unified analytics + cashflow forecasting for growth-stage teams.</p>
+            <div class="tags">
+              <span>UX Strategy</span>
+              <span>Design System</span>
+              <span>React</span>
+            </div>
+          </article>
+          <article class="card" data-category="brand">
+            <div class="card__meta">
+              <span>02</span>
+              <span>2024</span>
+            </div>
+            <h3>Studio North Rebrand</h3>
+            <p>Visual identity + content kit for a global creative collective.</p>
+            <div class="tags">
+              <span>Identity</span>
+              <span>Motion</span>
+              <span>Web</span>
+            </div>
+          </article>
+          <article class="card" data-category="product">
+            <div class="card__meta">
+              <span>03</span>
+              <span>2024</span>
+            </div>
+            <h3>Atlas Travel OS</h3>
+            <p>End-to-end itinerary builder with collaborative planning.</p>
+            <div class="tags">
+              <span>Product</span>
+              <span>Prototype</span>
+              <span>AI Assist</span>
+            </div>
+          </article>
+          <article class="card" data-category="experiments">
+            <div class="card__meta">
+              <span>04</span>
+              <span>2023</span>
+            </div>
+            <h3>Lightfield Type</h3>
+            <p>Generative typography experiments for kinetic branding.</p>
+            <div class="tags">
+              <span>WebGL</span>
+              <span>Canvas</span>
+              <span>Motion</span>
+            </div>
+          </article>
+        </div>
+      </section>
 
-      document.querySelector('#goReserve').onclick = () => {
-        location.href = `./event.html?id=${next.id}`;
-      };
-    })();
-  </script>
-</body>
+      <section class="about" id="about">
+        <div class="about__text">
+          <p class="eyebrow">About</p>
+          <h2>Designing with systems, storytelling, and a little mischief.</h2>
+          <p>
+            I partner with founders and teams to translate complex ideas into clear,
+            human experiences. My approach blends research, rapid prototyping, and
+            expressive UI craft.
+          </p>
+          <p>
+            Recent focus: design ops, component libraries, and onboarding flows that
+            reduce friction without losing personality.
+          </p>
+          <div class="about__actions">
+            <a class="btn btn--outline" href="#contact">Start a project</a>
+            <a class="btn btn--ghost" href="#">Download CV</a>
+          </div>
+        </div>
+        <div class="about__panel">
+          <div>
+            <h3>Focus</h3>
+            <ul>
+              <li>Product strategy</li>
+              <li>Design systems</li>
+              <li>Frontend prototypes</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Toolbox</h3>
+            <ul>
+              <li>Figma / FigJam</li>
+              <li>Framer / Webflow</li>
+              <li>React / TypeScript</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Currently</h3>
+            <ul>
+              <li>Lead Designer @ NovaLab</li>
+              <li>Mentor @ DesignOps KR</li>
+              <li>Speaker on AI UX</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="skills" id="skills">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Capabilities</p>
+            <h2>Skills tuned for impact.</h2>
+          </div>
+        </div>
+        <div class="skills__list">
+          <div class="skill">
+            <h3>Product Vision</h3>
+            <p>Roadmapping, MVP definition, and opportunity sizing.</p>
+          </div>
+          <div class="skill">
+            <h3>UX Systems</h3>
+            <p>Design tokens, documentation, and component governance.</p>
+          </div>
+          <div class="skill">
+            <h3>Interface Craft</h3>
+            <p>High-fidelity UI, micro-interactions, and responsive polish.</p>
+          </div>
+          <div class="skill">
+            <h3>Front-end Build</h3>
+            <p>Modern HTML/CSS/JS with accessibility in mind.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="timeline">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Timeline</p>
+            <h2>Recent roles & milestones.</h2>
+          </div>
+        </div>
+        <div class="timeline__items">
+          <div class="timeline__item">
+            <span>2025 — Now</span>
+            <h3>NovaLab / Lead Designer</h3>
+            <p>Launched a unified fintech design system used across 6 products.</p>
+          </div>
+          <div class="timeline__item">
+            <span>2023 — 2025</span>
+            <h3>EdgeStudio / Product Designer</h3>
+            <p>Scaled onboarding conversion from 18% to 42% through flow redesign.</p>
+          </div>
+          <div class="timeline__item">
+            <span>2021 — 2023</span>
+            <h3>Freelance / Creative Technologist</h3>
+            <p>Worked with global teams on immersive landing pages and brand systems.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="contact__content">
+          <p class="eyebrow">Contact</p>
+          <h2>Let’s build something unforgettable.</h2>
+          <p>
+            Available for select product design and frontend collaborations. Share a
+            brief and I will reply within 48 hours.
+          </p>
+          <form class="contact__form">
+            <label>
+              Name
+              <input type="text" name="name" placeholder="Your name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="you@email.com" required />
+            </label>
+            <label>
+              Project
+              <textarea name="message" rows="4" placeholder="Tell me about the project" required></textarea>
+            </label>
+            <button class="btn" type="submit">Send message</button>
+          </form>
+        </div>
+        <div class="contact__aside">
+          <div class="contact__card">
+            <h3>Quick links</h3>
+            <a href="mailto:hello@choongil.studio">hello@choongil.studio</a>
+            <a href="#">behance.net/choongil</a>
+            <a href="#">linkedin.com/in/choongil</a>
+          </div>
+          <div class="contact__card">
+            <h3>Based in</h3>
+            <p>Seoul · Remote friendly</p>
+            <span class="chip chip--static">Open for 2026</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 Choongil. Crafted with curiosity.</p>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
 </html>
